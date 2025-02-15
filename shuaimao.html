@@ -93,26 +93,13 @@
             margin-bottom: 20px;
         }
 
-        /* 只对数字2025添加渐变 */
+        /* 只对数字2025应用静态渐变 */
         .year {
             font-size: 2.5rem;
             font-weight: bold;
             background: linear-gradient(to right, #ff6347, #ffcc00, #00ccff);
             -webkit-background-clip: text;
             color: transparent;
-            animation: gradientEffect 3s linear infinite;
-        }
-
-        @keyframes gradientEffect {
-            0% {
-                background: linear-gradient(to right, #ff6347, #ffcc00, #00ccff);
-            }
-            50% {
-                background: linear-gradient(to right, #ff6347, #ff1493, #ff6347);
-            }
-            100% {
-                background: linear-gradient(to right, #ff6347, #ffcc00, #00ccff);
-            }
         }
 
         /* 当前时间样式 */
