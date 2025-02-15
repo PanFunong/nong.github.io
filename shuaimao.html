@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>潘潘爱帅帅</title>
+    <title>潘潘爱帅帅🤏</title>
     <style>
         body {
             margin: 0;
@@ -16,7 +16,6 @@
             align-items: center;
             height: 100vh;
             flex-direction: column;
-            overflow: hidden;
             position: relative;
         }
 
@@ -79,92 +78,11 @@
             color: #ff6347;
         }
 
-        /* 烟花特效 */
-        .fireworks {
+        canvas {
             position: absolute;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
             z-index: -1;
-        }
-
-        .firework {
-            position: absolute;
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background-color: #ff6347;
-            opacity: 0;
-            animation: firework 1s ease-out infinite;
-        }
-
-        @keyframes firework {
-            0% {
-                top: 90%;
-                left: 50%;
-                opacity: 1;
-                transform: scale(1);
-            }
-            50% {
-                top: 10%;
-                left: 50%;
-                opacity: 0.6;
-                transform: scale(1.5);
-            }
-            100% {
-                top: 10%;
-                left: 50%;
-                opacity: 0;
-                transform: scale(2);
-            }
-        }
-
-        /* 添加更多的烟花粒子 */
-        .firework:nth-child(odd) {
-            background-color: #ffcc00;
-            animation-delay: 0.2s;
-        }
-        .firework:nth-child(even) {
-            background-color: #00ccff;
-            animation-delay: 0.4s;
-        }
-        
-        .firework:nth-child(3) {
-            background-color: #ff69b4;
-        }
-        .firework:nth-child(4) {
-            background-color: #32cd32;
-        }
-        .firework:nth-child(5) {
-            background-color: #ff1493;
-        }
-        .firework:nth-child(6) {
-            background-color: #ffff00;
-        }
-
-        .firework-container {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            pointer-events: none;
-        }
-
-        .firework-container div {
-            animation: explode 1.5s ease-out forwards;
-        }
-
-        @keyframes explode {
-            0% {
-                opacity: 1;
-                transform: scale(0) translate(-50%, -50%);
-            }
-            100% {
-                opacity: 0;
-                transform: scale(3) translate(-50%, -50%);
-            }
         }
     </style>
 </head>
@@ -176,16 +94,81 @@
         <a href="https://github.com" target="_blank">我的GitHub</a>
     </div>
 
-    <!-- 烟花特效 -->
-    <div class="fireworks">
-        <div class="firework-container">
-            <div class="firework"></div>
-            <div class="firework"></div>
-            <div class="firework"></div>
-            <div class="firework"></div>
-            <div class="firework"></div>
-            <div class="firework"></div>
-        </div>
-    </div>
+    <!-- Canvas用于绘制烟花效果 -->
+    <canvas id="fireworksCanvas"></canvas>
+
+    <script>
+        const canvas = document.getElementById('fireworksCanvas');
+        const ctx = canvas.getContext('2d');
+        const colors = ['#ff6347', '#ffcc00', '#00ccff', '#ff69b4', '#32cd32', '#ffff00'];
+        let particles = [];
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        // 随机生成颜色
+        function getRandomColor() {
+            return colors[Math.floor(Math.random() * colors.length)];
+        }
+
+        // 创建烟花爆炸的粒子
+        function createFirework(x, y) {
+            let count = 100; // 粒子数量
+            for (let i = 0; i < count; i++) {
+                particles.push({
+                    x: x,
+                    y: y,
+                    speed: Math.random() * 4 + 2, // 随机速度
+                    angle: Math.random() * 2 * Math.PI, // 随机角度
+                    radius: Math.random() * 3 + 1, // 粒子半径
+                    color: getRandomColor(),
+                    life: Math.random() * 30 + 30, // 粒子寿命
+                    alpha: 1 // 初始透明度
+                });
+            }
+        }
+
+        // 更新并绘制每个粒子
+        function updateParticles() {
+            for (let i = 0; i < particles.length; i++) {
+                const p = particles[i];
+                p.x += Math.cos(p.angle) * p.speed;
+                p.y += Math.sin(p.angle) * p.speed;
+                p.alpha -= 0.02; // 粒子逐渐消失
+                p.life -= 1; // 粒子生命减少
+
+                if (p.life <= 0) {
+                    particles.splice(i, 1); // 移除寿命结束的粒子
+                    i--;
+                }
+            }
+        }
+
+        // 绘制烟花
+        function drawFireworks() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height); // 清除画布
+            updateParticles();
+            for (let i = 0; i < particles.length; i++) {
+                const p = particles[i];
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2, false);
+                ctx.fillStyle = p.color;
+                ctx.globalAlpha = p.alpha; // 设置粒子的透明度
+                ctx.fill();
+            }
+            requestAnimationFrame(drawFireworks);
+        }
+
+        // 创建烟花并启动
+        function launchFireworks() {
+            const x = Math.random() * canvas.width; // 随机x坐标
+            const y = Math.random() * canvas.height * 0.5; // 随机y坐标，爆炸位置在画布上半部分
+            createFirework(x, y);
+        }
+
+        // 每隔一定时间发射烟花
+        setInterval(launchFireworks, 1000); // 每隔1秒发射一次烟花
+        drawFireworks(); // 开始绘制烟花
+    </script>
 </body>
 </html>
