@@ -17,6 +17,7 @@
             height: 100vh;
             flex-direction: column;
             overflow: hidden;
+            position: relative;
         }
 
         .title {
@@ -77,6 +78,54 @@
         .content a:hover {
             color: #ff6347;
         }
+
+        /* 烟花特效 */
+        .fireworks {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .firework {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: #ff6347;
+            opacity: 0;
+            animation: firework 1.5s ease-out infinite;
+        }
+
+        @keyframes firework {
+            0% {
+                top: 90%;
+                left: 50%;
+                opacity: 1;
+            }
+            50% {
+                top: 10%;
+                left: 60%;
+                opacity: 0.5;
+            }
+            100% {
+                top: 10%;
+                left: 40%;
+                opacity: 0;
+            }
+        }
+
+        /* 添加多个烟花 */
+        .firework:nth-child(odd) {
+            background-color: #ffcc00;
+            animation-delay: 0.2s;
+        }
+        .firework:nth-child(even) {
+            background-color: #00ccff;
+            animation-delay: 0.4s;
+        }
     </style>
 </head>
 <body>
@@ -85,6 +134,16 @@
         <img src="https://panfunong.github.io/nong.github.io/maoshuai.jpg" alt="帅帅的照片" class="photo">
         <p>欢迎来到我的个人主页！这里会有更多内容展示。</p>
         <a href="https://github.com" target="_blank">我的GitHub</a>
+    </div>
+
+    <!-- 烟花效果 -->
+    <div class="fireworks">
+        <div class="firework"></div>
+        <div class="firework"></div>
+        <div class="firework"></div>
+        <div class="firework"></div>
+        <div class="firework"></div>
+        <div class="firework"></div>
     </div>
 </body>
 </html>
