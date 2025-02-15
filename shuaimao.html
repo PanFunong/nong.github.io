@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>潘潘爱帅帅🤏</title>
+    <title>潘潘爱帅帅</title>
     <style>
         body {
             margin: 0;
@@ -84,6 +84,16 @@
             left: 0;
             z-index: -1;
         }
+
+        /* 当前时间样式 */
+        .time-display {
+            position: absolute;
+            bottom: 20px;
+            font-size: 1.5rem;
+            color: #333;
+            font-weight: bold;
+            z-index: 1;
+        }
     </style>
 </head>
 <body>
@@ -96,6 +106,9 @@
 
     <!-- Canvas用于绘制烟花效果 -->
     <canvas id="fireworksCanvas"></canvas>
+
+    <!-- 显示当前时间 -->
+    <div class="time-display" id="timeDisplay"></div>
 
     <script>
         const canvas = document.getElementById('fireworksCanvas');
@@ -169,6 +182,20 @@
         // 每隔一定时间发射烟花
         setInterval(launchFireworks, 1000); // 每隔1秒发射一次烟花
         drawFireworks(); // 开始绘制烟花
+
+        // 显示当前时间
+        function updateTime() {
+            const now = new Date();
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            const timeString = `${hours}:${minutes}:${seconds}`;
+            document.getElementById('timeDisplay').textContent = timeString;
+        }
+
+        // 每秒更新时间
+        setInterval(updateTime, 1000);
+        updateTime(); // 初始化显示时间
     </script>
 </body>
 </html>
