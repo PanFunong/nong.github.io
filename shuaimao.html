@@ -85,16 +85,22 @@
             z-index: -1;
         }
 
-        /* 新加的祝福语样式 */
+        /* 祝福语部分 */
         .birthday-message {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #333; /* 设置一个清晰的深色 */
+            margin-bottom: 20px;
+        }
+
+        /* 只对数字2025添加渐变 */
+        .year {
             font-size: 2.5rem;
             font-weight: bold;
             background: linear-gradient(to right, #ff6347, #ffcc00, #00ccff);
             -webkit-background-clip: text;
             color: transparent;
-            margin-bottom: 20px;
             animation: gradientEffect 3s linear infinite;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6); /* 给文字加个阴影 */
         }
 
         @keyframes gradientEffect {
@@ -123,7 +129,9 @@
 <body>
     <div class="content">
         <div class="title">潘潘爱帅帅</div>
-        <div class="birthday-message">祝毛帅2025生日快乐！</div> <!-- 祝福语 -->
+        <div class="birthday-message">
+            祝毛帅 <span class="year">2025</span> 生日快乐！
+        </div> <!-- 祝福语 -->
         <img src="https://panfunong.github.io/nong.github.io/maoshuai.jpg" alt="帅帅的照片" class="photo">
         <p>欢迎来到我的个人主页！这里会有更多内容展示。</p>
         <a href="https://github.com" target="_blank">我的GitHub</a>
