@@ -87,16 +87,17 @@
             width: 100%;
             height: 100%;
             pointer-events: none;
+            z-index: -1;
         }
 
         .firework {
             position: absolute;
-            width: 10px;
-            height: 10px;
+            width: 8px;
+            height: 8px;
             border-radius: 50%;
             background-color: #ff6347;
             opacity: 0;
-            animation: firework 1.5s ease-out infinite;
+            animation: firework 1s ease-out infinite;
         }
 
         @keyframes firework {
@@ -104,20 +105,23 @@
                 top: 90%;
                 left: 50%;
                 opacity: 1;
+                transform: scale(1);
             }
             50% {
                 top: 10%;
-                left: 60%;
-                opacity: 0.5;
+                left: 50%;
+                opacity: 0.6;
+                transform: scale(1.5);
             }
             100% {
                 top: 10%;
-                left: 40%;
+                left: 50%;
                 opacity: 0;
+                transform: scale(2);
             }
         }
 
-        /* 添加多个烟花 */
+        /* 添加更多的烟花粒子 */
         .firework:nth-child(odd) {
             background-color: #ffcc00;
             animation-delay: 0.2s;
@@ -125,6 +129,42 @@
         .firework:nth-child(even) {
             background-color: #00ccff;
             animation-delay: 0.4s;
+        }
+        
+        .firework:nth-child(3) {
+            background-color: #ff69b4;
+        }
+        .firework:nth-child(4) {
+            background-color: #32cd32;
+        }
+        .firework:nth-child(5) {
+            background-color: #ff1493;
+        }
+        .firework:nth-child(6) {
+            background-color: #ffff00;
+        }
+
+        .firework-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+        }
+
+        .firework-container div {
+            animation: explode 1.5s ease-out forwards;
+        }
+
+        @keyframes explode {
+            0% {
+                opacity: 1;
+                transform: scale(0) translate(-50%, -50%);
+            }
+            100% {
+                opacity: 0;
+                transform: scale(3) translate(-50%, -50%);
+            }
         }
     </style>
 </head>
@@ -136,14 +176,16 @@
         <a href="https://github.com" target="_blank">我的GitHub</a>
     </div>
 
-    <!-- 烟花效果 -->
+    <!-- 烟花特效 -->
     <div class="fireworks">
-        <div class="firework"></div>
-        <div class="firework"></div>
-        <div class="firework"></div>
-        <div class="firework"></div>
-        <div class="firework"></div>
-        <div class="firework"></div>
+        <div class="firework-container">
+            <div class="firework"></div>
+            <div class="firework"></div>
+            <div class="firework"></div>
+            <div class="firework"></div>
+            <div class="firework"></div>
+            <div class="firework"></div>
+        </div>
     </div>
 </body>
 </html>
